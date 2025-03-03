@@ -41,12 +41,11 @@ class perceptron:
             
             # Print progress
             accuracy = 1 - (mistakes / n_samples)
-            if (epoch + 1) % 10 == 0:
-                print(f"Epoch {epoch + 1}/{epochs}, Accuracy: {accuracy:.4f}")
+            #print(f"Epoch {epoch + 1}/{epochs}, Accuracy: {accuracy:.4f}")
                 
             # If perfect classification, we can stop early
             if mistakes == 0:
-                print(f"Converged at epoch {epoch + 1}")
+                #print(f"Converged at epoch {epoch + 1}")
                 # get end time
                 end_time = time.time()
                 # calculate total time
@@ -54,6 +53,12 @@ class perceptron:
                 self.finalAccruacy = accuracy
                 self.finalEpoch = epoch + 1
                 break
+            end_time = time.time()
+            # calculate total time
+            self.totalTime = end_time - start_time
+            self.finalAccruacy = accuracy
+            self.finalEpoch = epoch + 1
+            
     
     def plot_results(self, data_generator):
         # Plot the data points

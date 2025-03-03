@@ -32,7 +32,7 @@ class data_gen:
 
     def generate_labels(self):
         # print out the weights and bias
-        print(f"w: {self.w}, b: {self.b}")
+        #print(f"w: {self.w}, b: {self.b}")
         # Compute the linear combination
         line = self.x @ self.w + self.b
         # Assign labels in a vectorized way
@@ -41,7 +41,7 @@ class data_gen:
         # Check class balance
         pos_count = (self.labels == 1).sum().item()
         neg_count = (self.labels == -1).sum().item()
-        print(f"Class 1: {pos_count}, Class -1: {neg_count}")
+        #print(f"Class 1: {pos_count}, Class -1: {neg_count}")
 
         # Check if the classes are balanced
         if pos_count < neg_count/2 or neg_count < pos_count/2:

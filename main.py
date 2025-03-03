@@ -3,18 +3,22 @@
 import data_gen
 # import the perceptron class
 import perceptron
+import random 
+import matplotlib.pyplot as plt
 
 
 perceptron_accuracy = []
 perceptron_epoch = []
 perceptron_time = []
-start_seed = 0
 
 
-for i in range(10):
+
+for i in range(1000):
+    print("Iteration: "+ str(i) + "/1000") 
+    start_seed = random.randint(0, 1000)
     # Create a new data_gen object
     data = data_gen.data_gen(1000)
-    data.set_attributes_with_seed(start_seed)  # Set the seed for reproducibility
+    data.set_attributes_with_seed(start_seed+1)  # Set the seed for reproducibility
     # Generate the labels
 
     # PERCEPTRON EXPERIMENT:
@@ -25,43 +29,63 @@ for i in range(10):
         data.set_attributes_with_seed(start_seed)
 
     # Plot the data (saved to image file plot_data.png)
-    data.plot_data()
+    # data.plot_data()
 
     # use perceptron class
     # Create and train perceptron
-    model = perceptron.perceptron(learning_rate=0.1)
-    model.train(data, epochs=50)
+    model = perceptron.perceptron(learning_rate=0.01)
+    model.train(data, epochs=100)
     # append the accuracy, epoch, and time to the lists
     perceptron_accuracy.append(model.finalAccruacy)
     perceptron_epoch.append(model.finalEpoch)
     perceptron_time.append(model.totalTime)
 
+print(f"Perceptron Accuracy: {perceptron_accuracy}")
+print(f"Perceptron Epoch: {perceptron_epoch}")
+print(f"Perceptron Time: {perceptron_time}")
+
+# Calculate averages
+perceptron_accuracy_average = sum(perceptron_accuracy) / len(perceptron_accuracy)
+perceptron_epoch_average = sum(perceptron_epoch) / len(perceptron_epoch)
+perceptron_time_average = sum(perceptron_time) / len(perceptron_time)
 # Print the average accuracy, epoch, and time for perceptron
-print(f"Perceptron Average Accuracy: {sum(perceptron_accuracy)/len(perceptron_accuracy)}")
-print(f"Perceptron Average Epoch: {sum(perceptron_epoch)/len(perceptron_epoch)}")
-print(f"Perceptron Average Time: {sum(perceptron_time)/len(perceptron_time)}")
-# Plot the results
-import matplotlib.pyplot as plt
-plt.figure(figsize=(10, 5))
-plt.subplot(1, 3, 1)
-plt.hist(perceptron_accuracy, bins=20, color='blue', alpha=0.7)
-plt.title('Perceptron Accuracy Distribution')
-plt.xlabel('Accuracy')
-plt.ylabel('Frequency')
-plt.subplot(1, 3, 2)
-plt.hist(perceptron_epoch, bins=20, color='green', alpha=0.7)
-plt.title('Perceptron Epoch Distribution')
-plt.xlabel('Epoch')
-plt.ylabel('Frequency')
-plt.subplot(1, 3, 3)
-plt.hist(perceptron_time, bins=20, color='red', alpha=0.7)
-plt.title('Perceptron Time Distribution')
-plt.xlabel('Time (s)')
-plt.ylabel('Frequency')
-plt.tight_layout()
-plt.savefig('perceptron_results.png')
+print(f"Perceptron Average Accuracy: {perceptron_accuracy_average:.2%}")
+print(f"Perceptron Average Number of Epochs: {[perceptron_epoch_average]}")
+print(f"Perceptron Average Time: {perceptron_time_average:.2f} seconds")
 
 
+
+# Do all experiment histogram plotting below:
+
+# Plot Average Time
+plt.figure(figsize=(5, 5))
+plt.bar(['Perceptron'], [perceptron_time_average], color='blue')
+plt.ylabel('Average Time (seconds)')
+plt.title('Average Time for Learning Algorithm')
+plt.text(0, perceptron_time_average, f'{perceptron_time_average:.2f}s', 
+         ha='center', va='bottom', fontsize=12, fontweight='bold')
+plt.savefig('average_time.png')
+#plt.show()
+
+# Plot Average Accuracy
+plt.figure(figsize=(5, 5))
+plt.bar(['Perceptron'], [perceptron_accuracy_average], color='blue')
+plt.ylabel('Average Accuracy')
+plt.title('Average Accuracy for Learning Algorithm')
+plt.text(0, perceptron_accuracy_average, f'{perceptron_accuracy_average:.2%}', 
+         ha='center', va='bottom', fontsize=12, fontweight='bold')  # Percentage format
+plt.savefig('average_accuracy.png')
+#plt.show()
+
+# Plot Average Epoch
+plt.figure(figsize=(5, 5))
+plt.bar(['Perceptron'], [perceptron_epoch_average], color='blue')
+plt.ylabel('Average Epoch')
+plt.title('Average Epoch for Learning Algorithm')
+plt.text(0, perceptron_epoch_average, f'{perceptron_epoch_average:.0f}', 
+         ha='center', va='bottom', fontsize=12, fontweight='bold')  # Integer format
+plt.savefig('average_epoch.png')
+#plt.show()
 
  
 
