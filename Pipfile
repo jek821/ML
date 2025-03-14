@@ -10,6 +10,7 @@ torchaudio = "*"
 numpy = "*"
 matplotlib = "*"
 imageio = "*"
+pandas = "*"
 
 [dev-packages]
 
